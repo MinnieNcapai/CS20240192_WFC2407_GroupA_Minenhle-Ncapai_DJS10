@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 function App() {
-  const [posts, setPosts] = useState([]); // State to store posts
-  const [error, setError] = useState(null); // State to store error messages
-  const [loading, setLoading] = useState(true); // State to manage loading
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(true); // Set loading to true when fetching starts
+  const fetchPosts = () => {
+    setLoading(true); // Set loading to true whenever fetching starts
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then(response => {
         if (!response.ok) {
@@ -16,16 +16,26 @@ function App() {
       })
       .then(data => {
         setPosts(data);
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false); // Set loading to false even on error
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
       });
-  }, []); // Empty dependency array to run only once on mount
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error)
+    return (
+      <div>
+        <p>Error: {error}</p>
+        <button onClick={fetchPosts}>Retry</button>
+      </div>
+    );
 
   return (
     <div>
