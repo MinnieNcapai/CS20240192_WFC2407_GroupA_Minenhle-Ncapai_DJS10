@@ -13,7 +13,7 @@ function App() {
        // Check if the response is successful, if not, throw an error
       .then(response => {
         if (!response.ok) {
-          throw new Error('Could not load posts.');
+          throw new Error('Could not load posts. Please try again later.');
         }
         return response.json();  // Parse the JSON response
       })
@@ -38,7 +38,7 @@ function App() {
   if (error)
     return (
       <div>
-        <p>Error: {error}</p>
+        <h2>Error: {error}</h2>
         <button onClick={fetchPosts}>Retry</button> {/* Button to retry fetching */}
       </div>
     );
