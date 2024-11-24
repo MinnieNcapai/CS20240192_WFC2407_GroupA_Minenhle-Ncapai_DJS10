@@ -8,6 +8,7 @@ function App() {
 
   // Function to fetch blog posts from the API
   const fetchPosts = () => {
+    setError(null); // Clear the error state
     setLoading(true); // Set loading to true whenever fetching starts
     fetch('https://jsonplaceholder.typicode.com/posts')
        // Check if the response is successful, if not, throw an error
